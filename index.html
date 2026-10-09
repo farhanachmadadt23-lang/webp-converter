@@ -3,48 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ubah WEBP ke JPG Online Gratis - Tanpa Aplikasi & Cepat</title>
-    <meta name="description" content="Cara cepat konversi foto WEBP ke JPG secara online dan gratis. Hasil jernih, tanpa perlu install aplikasi, instan dan aman.">
-    <meta name="keywords" content="convert webp to jpg, ubah webp ke jpg, konversi gambar webp, webp to jpg online gratis">
+    <title>Multi-Image Converter Online Gratis - Convert WEBP, PNG, JPG, BMP</title>
+    <meta name="description" content="Konversi foto online gratis & cepat. Ubah WEBP ke JPG, PNG ke WEBP, JPG ke PNG instan tanpa install aplikasi. Bisa banyak foto sekaligus!">
+    <meta name="keywords" content="image converter, convert webp to jpg, png to jpg, webp converter, ubah format foto online">
     <meta name="robots" content="index, follow">
 
-    <!-- CSS / Tampilan -->
     <style>
         :root {
             --primary: #4F46E5;
             --primary-hover: #4338CA;
-            --bg: #F9FAFB;
+            --bg: #F3F4F6;
             --card-bg: #FFFFFF;
             --text: #1F2937;
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        body { background-color: var(--bg); color: var(--text); padding: 20px; min-height: 100vh; display: flex; flex-direction: column; justify-content: space-between; align-items: center; }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, sans-serif; }
+        body { background-color: var(--bg); color: var(--text); padding: 20px; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: space-between; }
 
-        .container { max-width: 650px; width: 100%; background: var(--card-bg); padding: 30px; border-radius: 16px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); text-align: center; margin-top: 20px; }
-        h1 { font-size: 1.8rem; margin-bottom: 10px; color: #111827; }
+        .container { max-width: 700px; width: 100%; background: var(--card-bg); padding: 30px; border-radius: 16px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); text-align: center; margin-top: 20px; }
+        h1 { font-size: 1.8rem; margin-bottom: 8px; color: #111827; }
         p.subtitle { color: #6B7280; font-size: 0.95rem; margin-bottom: 25px; }
 
-        /* Drop Zone UI */
-        .drop-zone { border: 2px dashed #CBD5E1; border-radius: 12px; padding: 40px 20px; cursor: pointer; transition: all 0.3s ease; background: #F8FAFC; }
+        /* Form Konfigurasi Target Format */
+        .option-box { display: flex; gap: 15px; justify-content: center; align-items: center; margin-bottom: 20px; background: #EEF2FF; padding: 15px; border-radius: 10px; flex-wrap: wrap; }
+        .option-box label { font-weight: 600; font-size: 0.9rem; color: #374151; }
+        .option-box select { padding: 8px 15px; border-radius: 6px; border: 1px solid #C7D2FE; font-weight: bold; color: var(--primary); outline: none; cursor: pointer; }
+
+        /* Drop Zone */
+        .drop-zone { border: 2px dashed #818CF8; border-radius: 12px; padding: 35px 20px; cursor: pointer; transition: all 0.3s ease; background: #FAF5FF; }
         .drop-zone:hover, .drop-zone.dragover { border-color: var(--primary); background: #EEF2FF; }
-        .drop-zone p { color: #64748B; font-weight: 500; }
-        .drop-zone span { color: var(--primary); text-decoration: underline; }
+        .drop-zone p { color: #4B5563; font-weight: 500; }
+        .drop-zone span { color: var(--primary); text-decoration: underline; font-weight: bold; }
         input[type="file"] { display: none; }
 
-        /* Controls & Preview */
-        .controls { display: none; margin-top: 20px; text-align: left; }
-        .controls label { font-size: 0.85rem; font-weight: 600; color: #374151; display: block; margin-bottom: 5px; }
-        .controls input[type="range"] { width: 100%; margin-bottom: 15px; }
+        /* Preview List & Results */
+        .result-list { margin-top: 25px; display: flex; flex-direction: column; gap: 12px; text-align: left; }
+        .file-item { display: flex; align-items: center; justify-content: space-between; background: #F9FAFB; padding: 12px 16px; border-radius: 8px; border: 1px solid #E5E7EB; }
+        .file-info { display: flex; align-items: center; gap: 12px; overflow: hidden; }
+        .file-info img { width: 45px; height: 45px; object-fit: cover; border-radius: 6px; border: 1px solid #D1D5DB; }
+        .file-name { font-size: 0.9rem; font-weight: 600; color: #374151; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 220px; }
+        
+        .btn-dl { background: #10B981; color: white; padding: 8px 16px; border-radius: 6px; font-weight: 600; text-decoration: none; font-size: 0.85rem; transition: 0.2s; border: none; cursor: pointer; }
+        .btn-dl:hover { background: #059669; }
 
-        .preview-container { display: none; margin-top: 20px; text-align: center; }
-        .preview-container img { max-width: 100%; max-height: 250px; border-radius: 8px; border: 1px solid #E2E8F0; margin-bottom: 15px; }
-
-        .btn-download { display: inline-block; background: var(--primary); color: white; padding: 12px 28px; border-radius: 8px; font-weight: 600; text-decoration: none; transition: 0.2s ease; border: none; cursor: pointer; width: 100%; }
-        .btn-download:hover { background: var(--primary-hover); }
-
-        /* Section Donasi / Saweria */
-        .donate-box { margin-top: 30px; padding: 15px; background: #FEF3C7; border-radius: 8px; border: 1px solid #FCD34D; font-size: 0.85rem; color: #92400E; }
+        .donate-box { margin-top: 30px; padding: 15px; background: #FEF3C7; border-radius: 8px; border: 1px solid #FCD34D; font-size: 0.85rem; color: #92400E; text-align: center; }
         .donate-box a { color: #B45309; font-weight: bold; text-decoration: underline; }
 
         footer { margin-top: 40px; font-size: 0.8rem; color: #9CA3AF; text-align: center; }
@@ -53,60 +55,49 @@
 <body>
 
     <div class="container">
-        <h1>Ubah WEBP ke JPG Instan</h1>
-        <p class="subtitle">Konversi gambar WEBP kamu jadi JPG secara gratis, instan, dan aman tanpa install aplikasi!</p>
+        <h1>All-in-One Image Converter</h1>
+        <p class="subtitle">Ubah format foto WEBP, PNG, JPG, BMP secara instan, gratis, dan bisa banyak foto sekaligus!</p>
 
-        <!-- Area Upload -->
+        <!-- Dropdown Pilih Target Format -->
+        <div class="option-box">
+            <label for="targetFormat">Konversi Semua Gambar Ke Format:</label>
+            <select id="targetFormat">
+                <option value="image/jpeg">JPG / JPEG</option>
+                <option value="image/png">PNG</option>
+                <option value="image/webp">WEBP</option>
+            </select>
+        </div>
+
+        <!-- Drop Zone Input File -->
         <div class="drop-zone" id="dropZone">
-            <p>Tarik & Lepas foto WEBP ke sini, atau <span>Pilih File</span></p>
-            <input type="file" id="fileInput" accept="image/webp">
+            <p>Tarik & Lepas banyak foto ke sini, atau <span>Pilih File</span></p>
+            <input type="file" id="fileInput" accept="image/*" multiple>
         </div>
 
-        <!-- Controls Slider Kualitas Gambar -->
-        <div class="controls" id="controls">
-            <label for="quality">Kualitas Gambar JPG: <span id="qualityVal">90%</span></label>
-            <input type="range" id="quality" min="0.1" max="1" step="0.05" value="0.9">
-        </div>
+        <!-- List Hasil Konversi -->
+        <div class="result-list" id="resultList"></div>
 
-        <!-- Area Preview & Download -->
-        <div class="preview-container" id="previewContainer">
-            <img id="imagePreview" alt="Preview Hasil JPG">
-            <a id="downloadBtn" class="btn-download">Download Hasil JPG</a>
-        </div>
-
-        <!-- Canvas Tersembunyi buat Proses Konversi -->
         <canvas id="canvas" style="display:none;"></canvas>
 
-        <!-- Widget Donasi (Monetisasi) -->
         <div class="donate-box">
-            Suka sama web ini? Bantu kembangin web ini biar tetep gratis dengan <a href="https://saweria.co/namakamu" target="_blank">Traktir Kopi ☕</a>
+            Suka sama tools ini? Bantu server tetep gratis dengan <a href="https://saweria.co/namakamu" target="_blank">Traktir Kopi ☕</a>
         </div>
     </div>
 
     <footer>
-        &copy; 2026 ConvertFoto - Seluruh file diproses langsung di HP/Browser kamu (Aman & Privat).
+        &copy; 2026 ConvertFoto - Seluruh proses konversi dilakukan langsung di perangkat kamu (Aman & Privat).
     </footer>
 
-    <!-- JavaScript Logic -->
     <script>
         const dropZone = document.getElementById('dropZone');
         const fileInput = document.getElementById('fileInput');
+        const targetFormatSelect = document.getElementById('targetFormat');
+        const resultList = document.getElementById('resultList');
         const canvas = document.getElementById('canvas');
         const ctx = canvas.getContext('2d');
-        const previewContainer = document.getElementById('previewContainer');
-        const imagePreview = document.getElementById('imagePreview');
-        const downloadBtn = document.getElementById('downloadBtn');
-        const controls = document.getElementById('controls');
-        const qualityInput = document.getElementById('quality');
-        const qualityVal = document.getElementById('qualityVal');
 
-        let currentImg = null;
-        let currentFileName = "hasil-konversi.jpg";
-
-        // Event Klik Area Upload
         dropZone.addEventListener('click', () => fileInput.click());
 
-        // Event Drag & Drop
         dropZone.addEventListener('dragover', (e) => {
             e.preventDefault();
             dropZone.classList.add('dragover');
@@ -118,65 +109,69 @@
             e.preventDefault();
             dropZone.classList.remove('dragover');
             if (e.dataTransfer.files.length) {
-                handleFile(e.dataTransfer.files[0]);
+                handleFiles(e.dataTransfer.files);
             }
         });
 
         fileInput.addEventListener('change', (e) => {
             if (e.target.files.length) {
-                handleFile(e.target.files[0]);
+                handleFiles(e.target.files);
             }
         });
 
-        // Update indikator kualitas slider
-        qualityInput.addEventListener('input', (e) => {
-            qualityVal.innerText = Math.round(e.target.value * 100) + '%';
-            if (currentImg) processConversion();
-        });
+        function handleFiles(files) {
+            Array.from(files).forEach(file => {
+                if (!file.type.startsWith('image/')) return;
+                convertImage(file);
+            });
+        }
 
-        // Eksekusi Pembacaan File
-        function handleFile(file) {
-            if (file.type !== 'image/webp' && !file.name.endsWith('.webp')) {
-                alert('Tolong upload file format WEBP ya, bre!');
-                return;
-            }
-
-            currentFileName = file.name.replace(/\.[^/.]+$/, "") + ".jpg";
-
+        function convertImage(file) {
             const reader = new FileReader();
             reader.onload = (event) => {
                 const img = new Image();
                 img.onload = () => {
-                    currentImg = img;
-                    controls.style.display = 'block';
-                    previewContainer.style.display = 'block';
-                    processConversion();
+                    canvas.width = img.width;
+                    canvas.height = img.height;
+
+                    const targetMime = targetFormatSelect.value;
+                    
+                    // Kalau konversi ke JPG, kasih background putih biar transparansi nggak jadi hitam
+                    if (targetMime === 'image/jpeg') {
+                        ctx.fillStyle = '#FFFFFF';
+                        ctx.fillRect(0, 0, canvas.width, canvas.height);
+                    } else {
+                        ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    }
+
+                    ctx.drawImage(img, 0, 0);
+
+                    const convertedUrl = canvas.toDataURL(targetMime, 0.9);
+                    
+                    let ext = "jpg";
+                    if (targetMime === "image/png") ext = "png";
+                    if (targetMime === "image/webp") ext = "webp";
+
+                    const newFileName = file.name.replace(/\.[^/.]+$/, "") + `_converted.${ext}`;
+
+                    renderResultItem(convertedUrl, newFileName);
                 };
                 img.src = event.target.result;
             };
             reader.readAsDataURL(file);
         }
 
-        // Proses Konversi lewat HTML5 Canvas
-        function processConversion() {
-            canvas.width = currentImg.width;
-            canvas.height = currentImg.height;
-
-            // Beri background putih (biar kalau WEBP transparan nggak jadi hitam)
-            ctx.fillStyle = '#FFFFFF';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-            // Gambar ulang foto di canvas
-            ctx.drawImage(currentImg, 0, 0);
-
-            // Ambil URL JPG dengan kualitas dari slider
-            const quality = parseFloat(qualityInput.value);
-            const jpgDataUrl = canvas.toDataURL('image/jpeg', quality);
-
-            // Tampilkan Preview & Pasang Link Download
-            imagePreview.src = jpgDataUrl;
-            downloadBtn.href = jpgDataUrl;
-            downloadBtn.download = currentFileName;
+        function renderResultItem(dataUrl, fileName) {
+            const item = document.createElement('div');
+            item.className = 'file-item';
+            item.innerHTML = `
+                <div class="file-info">
+                    <img src="${dataUrl}" alt="preview">
+                    <span class="file-name">${fileName}</span>
+                </div>
+                <a href="${dataUrl}" download="${fileName}" class="btn-dl">Download</a>
+            `;
+            resultList.prepend(item);
         }
     </script>
 </body>
