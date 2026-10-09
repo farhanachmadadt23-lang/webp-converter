@@ -3,50 +3,62 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Multi-Image Converter Online Gratis - Convert WEBP, PNG, JPG, BMP</title>
-    <meta name="description" content="Konversi foto online gratis & cepat. Ubah WEBP ke JPG, PNG ke WEBP, JPG ke PNG instan tanpa install aplikasi. Bisa banyak foto sekaligus!">
-    <meta name="keywords" content="image converter, convert webp to jpg, png to jpg, webp converter, ubah format foto online">
+    <title>OmniTools - Converter Gambar & Dokumen Online Gratis</title>
+    <meta name="description" content="Kumpulan alat konversi file online gratis. Convert WEBP, PNG, JPG, PDF, Gabung PDF, Foto ke PDF instan tanpa install aplikasi.">
     <meta name="robots" content="index, follow">
+
+    <!-- Library PDF processing di browser -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
 
     <style>
         :root {
-            --primary: #4F46E5;
-            --primary-hover: #4338CA;
-            --bg: #F3F4F6;
+            --primary: #E11D48;
+            --primary-hover: #BE123C;
+            --bg: #F8FAFC;
             --card-bg: #FFFFFF;
-            --text: #1F2937;
+            --text: #0F172A;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, sans-serif; }
         body { background-color: var(--bg); color: var(--text); padding: 20px; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: space-between; }
 
-        .container { max-width: 700px; width: 100%; background: var(--card-bg); padding: 30px; border-radius: 16px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); text-align: center; margin-top: 20px; }
-        h1 { font-size: 1.8rem; margin-bottom: 8px; color: #111827; }
-        p.subtitle { color: #6B7280; font-size: 0.95rem; margin-bottom: 25px; }
+        header { text-align: center; margin-bottom: 30px; margin-top: 10px; }
+        header h1 { font-size: 2.2rem; color: var(--primary); font-weight: 800; cursor: pointer; }
+        header p { color: #64748B; font-size: 0.95rem; margin-top: 5px; }
 
-        /* Form Konfigurasi Target Format */
-        .option-box { display: flex; gap: 15px; justify-content: center; align-items: center; margin-bottom: 20px; background: #EEF2FF; padding: 15px; border-radius: 10px; flex-wrap: wrap; }
-        .option-box label { font-weight: 600; font-size: 0.9rem; color: #374151; }
-        .option-box select { padding: 8px 15px; border-radius: 6px; border: 1px solid #C7D2FE; font-weight: bold; color: var(--primary); outline: none; cursor: pointer; }
+        .container { max-width: 900px; width: 100%; }
 
-        /* Drop Zone */
-        .drop-zone { border: 2px dashed #818CF8; border-radius: 12px; padding: 35px 20px; cursor: pointer; transition: all 0.3s ease; background: #FAF5FF; }
-        .drop-zone:hover, .drop-zone.dragover { border-color: var(--primary); background: #EEF2FF; }
-        .drop-zone p { color: #4B5563; font-weight: 500; }
-        .drop-zone span { color: var(--primary); text-decoration: underline; font-weight: bold; }
+        /* Dashboard Grid Cards (iLovePDF Style) */
+        .tools-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
+        .tool-card { background: var(--card-bg); border: 1px solid #E2E8F0; border-radius: 12px; padding: 25px 20px; text-align: center; cursor: pointer; transition: all 0.25s ease; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); }
+        .tool-card:hover { transform: translateY(-4px); border-color: var(--primary); box-shadow: 0 10px 15px -3px rgba(225, 29, 72, 0.15); }
+        .tool-icon { font-size: 2.5rem; margin-bottom: 12px; }
+        .tool-title { font-weight: 700; font-size: 1.1rem; color: #1E293B; margin-bottom: 6px; }
+        .tool-desc { font-size: 0.85rem; color: #64748B; line-height: 1.4; }
+
+        /* Workspace Area (Satu Alat Aktif) */
+        .workspace { display: none; background: var(--card-bg); padding: 30px; border-radius: 16px; border: 1px solid #E2E8F0; box-shadow: 0 10px 25px rgba(0,0,0,0.05); text-align: center; }
+        .btn-back { display: inline-block; background: #F1F5F9; color: #475569; padding: 8px 16px; border-radius: 6px; font-weight: 600; text-decoration: none; font-size: 0.85rem; margin-bottom: 20px; cursor: pointer; border: none; }
+        .btn-back:hover { background: #E2E8F0; }
+
+        .options-bar { display: flex; gap: 15px; justify-content: center; align-items: center; margin-bottom: 20px; background: #FFF1F2; padding: 15px; border-radius: 10px; flex-wrap: wrap; }
+        .options-bar label { font-weight: 600; font-size: 0.9rem; color: #9F1239; }
+        .options-bar select, .options-bar input { padding: 8px 12px; border-radius: 6px; border: 1px solid #FECDD3; outline: none; }
+
+        .drop-zone { border: 2px dashed #FDA4AF; border-radius: 12px; padding: 40px 20px; cursor: pointer; background: #FFF1F2; transition: 0.3s; }
+        .drop-zone:hover { background: #FFE4E6; border-color: var(--primary); }
+        .drop-zone p { color: #9F1239; font-weight: 600; }
         input[type="file"] { display: none; }
 
-        /* Preview List & Results */
-        .result-list { margin-top: 25px; display: flex; flex-direction: column; gap: 12px; text-align: left; }
-        .file-item { display: flex; align-items: center; justify-content: space-between; background: #F9FAFB; padding: 12px 16px; border-radius: 8px; border: 1px solid #E5E7EB; }
-        .file-info { display: flex; align-items: center; gap: 12px; overflow: hidden; }
-        .file-info img { width: 45px; height: 45px; object-fit: cover; border-radius: 6px; border: 1px solid #D1D5DB; }
-        .file-name { font-size: 0.9rem; font-weight: 600; color: #374151; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 220px; }
-        
-        .btn-dl { background: #10B981; color: white; padding: 8px 16px; border-radius: 6px; font-weight: 600; text-decoration: none; font-size: 0.85rem; transition: 0.2s; border: none; cursor: pointer; }
-        .btn-dl:hover { background: #059669; }
+        .btn-action { background: var(--primary); color: white; border: none; padding: 12px 28px; border-radius: 8px; font-weight: 700; font-size: 1rem; cursor: pointer; margin-top: 20px; width: 100%; transition: 0.2s; }
+        .btn-action:hover { background: var(--primary-hover); }
 
-        .donate-box { margin-top: 30px; padding: 15px; background: #FEF3C7; border-radius: 8px; border: 1px solid #FCD34D; font-size: 0.85rem; color: #92400E; text-align: center; }
+        .result-box { margin-top: 20px; text-align: left; }
+        .result-item { display: flex; justify-content: space-between; align-items: center; background: #F8FAFC; padding: 12px; border-radius: 8px; border: 1px solid #E2E8F0; margin-top: 10px; }
+        .result-item a { background: #10B981; color: white; text-decoration: none; padding: 6px 14px; border-radius: 6px; font-weight: 600; font-size: 0.85rem; }
+
+        .donate-box { margin-top: 40px; padding: 15px; background: #FEF3C7; border-radius: 8px; border: 1px solid #FCD34D; font-size: 0.85rem; color: #92400E; text-align: center; }
         .donate-box a { color: #B45309; font-weight: bold; text-decoration: underline; }
 
         footer { margin-top: 40px; font-size: 0.8rem; color: #9CA3AF; text-align: center; }
@@ -54,124 +66,321 @@
 </head>
 <body>
 
+    <header>
+        <h1 onclick="showDashboard()">OmniTools</h1>
+        <p>Solusi Lengkap Konversi Gambar & Dokumen Gratis Instan</p>
+    </header>
+
     <div class="container">
-        <h1>All-in-One Image Converter</h1>
-        <p class="subtitle">Ubah format foto WEBP, PNG, JPG, BMP secara instan, gratis, dan bisa banyak foto sekaligus!</p>
+        
+        <!-- DASHBOARD GRID CARDS -->
+        <div class="tools-grid" id="toolsGrid">
+            
+            <div class="tool-card" onclick="openTool('imgConverter')">
+                <div class="tool-icon">🖼️</div>
+                <div class="tool-title">Image Converter Flexible</div>
+                <div class="tool-desc">Ubah format bebas (WEBP, PNG, JPG, BMP) satu per satu atau banyak sekaligus.</div>
+            </div>
 
-        <!-- Dropdown Pilih Target Format -->
-        <div class="option-box">
-            <label for="targetFormat">Konversi Semua Gambar Ke Format:</label>
-            <select id="targetFormat">
-                <option value="image/jpeg">JPG / JPEG</option>
-                <option value="image/png">PNG</option>
-                <option value="image/webp">WEBP</option>
-            </select>
+            <div class="tool-card" onclick="openTool('imgToPdf')">
+                <div class="tool-icon">📄</div>
+                <div class="tool-title">Foto / Gambar ke PDF</div>
+                <div class="tool-desc">Gabungkan sekumpulan foto (JPG/PNG/WEBP) menjadi 1 file dokumen PDF.</div>
+            </div>
+
+            <div class="tool-card" onclick="openTool('mergePdf')">
+                <div class="tool-icon">📚</div>
+                <div class="tool-title">Gabung PDF (Merge)</div>
+                <div class="tool-desc">Gabungkan beberapa dokumen PDF menjadi satu file utuh dengan cepat.</div>
+            </div>
+
+            <div class="tool-card" onclick="openTool('pdfToTxt')">
+                <div class="tool-icon">📝</div>
+                <div class="tool-title">PDF ke Teks (TXT)</div>
+                <div class="tool-desc">Ekstrak dan ambil seluruh teks tulisan dari file PDF kamu.</div>
+            </div>
+
+            <div class="tool-card" onclick="openTool('wordCounter')">
+                <div class="tool-icon">📊</div>
+                <div class="tool-title">Word & Character Counter</div>
+                <div class="tool-desc">Hitung jumlah kata, karakter, dan estimasi waktu baca tulisan secara instan.</div>
+            </div>
+
+            <div class="tool-card" onclick="openTool('compressImg')">
+                <div class="tool-icon">⚡</div>
+                <div class="tool-title">Kompres Gambar</div>
+                <div class="tool-desc">Kecilkan ukuran file foto tanpa bikin gambar pecah atau buram.</div>
+            </div>
+
         </div>
 
-        <!-- Drop Zone Input File -->
-        <div class="drop-zone" id="dropZone">
-            <p>Tarik & Lepas banyak foto ke sini, atau <span>Pilih File</span></p>
-            <input type="file" id="fileInput" accept="image/*" multiple>
+        <!-- WORKSPACE / AREA EKSEKUSI ALAT -->
+        <div class="workspace" id="workspace">
+            <button class="btn-back" onclick="showDashboard()">← Kembali ke Semua Alat</button>
+            <h2 id="toolTitle" style="margin-bottom: 10px;">Judul Alat</h2>
+            <p id="toolSubtitle" style="color: #64748B; font-size: 0.9rem; margin-bottom: 20px;">Deskripsi alat</p>
+
+            <div class="options-bar" id="optionsBar" style="display: none;"></div>
+
+            <div class="drop-zone" id="dropZone">
+                <p id="dropZoneText">Tarik & Lepas file ke sini, atau <span style="text-decoration: underline;">Pilih File</span></p>
+                <input type="file" id="fileInput">
+            </div>
+
+            <button class="btn-action" id="btnAction" style="display: none;">Proses File Now</button>
+
+            <div class="result-box" id="resultBox"></div>
         </div>
-
-        <!-- List Hasil Konversi -->
-        <div class="result-list" id="resultList"></div>
-
-        <canvas id="canvas" style="display:none;"></canvas>
 
         <div class="donate-box">
-            Suka sama tools ini? Bantu server tetep gratis dengan <a href="https://saweria.co/namakamu" target="_blank">Traktir Kopi ☕</a>
+            Suka pakai tools ini? Dukung pengembangannya dengan <a href="https://saweria.co/namakamu" target="_blank">Traktir Kopi ☕</a>
         </div>
     </div>
 
     <footer>
-        &copy; 2026 ConvertFoto - Seluruh proses konversi dilakukan langsung di perangkat kamu (Aman & Privat).
+        &copy; 2026 OmniTools - 100% Diproses Lokal di HP/Browser Kamu (Aman & Privat).
     </footer>
 
     <script>
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js';
+
+        let currentTool = '';
+        let selectedFiles = [];
+
+        const toolsGrid = document.getElementById('toolsGrid');
+        const workspace = document.getElementById('workspace');
+        const toolTitle = document.getElementById('toolTitle');
+        const toolSubtitle = document.getElementById('toolSubtitle');
+        const optionsBar = document.getElementById('optionsBar');
         const dropZone = document.getElementById('dropZone');
         const fileInput = document.getElementById('fileInput');
-        const targetFormatSelect = document.getElementById('targetFormat');
-        const resultList = document.getElementById('resultList');
-        const canvas = document.getElementById('canvas');
-        const ctx = canvas.getContext('2d');
+        const btnAction = document.getElementById('btnAction');
+        const resultBox = document.getElementById('resultBox');
+
+        function showDashboard() {
+            workspace.style.display = 'none';
+            toolsGrid.style.display = 'grid';
+            resetWorkspace();
+        }
+
+        function resetWorkspace() {
+            selectedFiles = [];
+            resultBox.innerHTML = '';
+            optionsBar.style.display = 'none';
+            optionsBar.innerHTML = '';
+            btnAction.style.display = 'none';
+            fileInput.value = '';
+        }
+
+        function openTool(toolKey) {
+            currentTool = toolKey;
+            resetWorkspace();
+            toolsGrid.style.display = 'none';
+            workspace.style.display = 'block';
+
+            if (toolKey === 'imgConverter') {
+                toolTitle.innerText = "Image Converter Flexible";
+                toolSubtitle.innerText = "Ubah format foto WEBP, PNG, JPG, BMP ke format pilihan kamu.";
+                fileInput.accept = "image/*";
+                fileInput.multiple = true;
+                optionsBar.style.display = 'flex';
+                optionsBar.innerHTML = `
+                    <label>Pilih Format Tujuan:</label>
+                    <select id="targetFormat">
+                        <option value="image/jpeg">JPG / JPEG</option>
+                        <option value="image/png">PNG</option>
+                        <option value="image/webp">WEBP</option>
+                    </select>
+                `;
+            } else if (toolKey === 'imgToPdf') {
+                toolTitle.innerText = "Foto / Gambar ke PDF";
+                toolSubtitle.innerText = "Pilih banyak foto untuk digabungkan menjadi 1 file PDF.";
+                fileInput.accept = "image/*";
+                fileInput.multiple = true;
+            } else if (toolKey === 'mergePdf') {
+                toolTitle.innerText = "Gabung Beberapa PDF (Merge)";
+                toolSubtitle.innerText = "Pilih minimal 2 file PDF untuk digabungkan jadi satu.";
+                fileInput.accept = "application/pdf";
+                fileInput.multiple = true;
+            } else if (toolKey === 'pdfToTxt') {
+                toolTitle.innerText = "PDF ke Teks (TXT)";
+                toolSubtitle.innerText = "Ambil tulisan teks yang ada di dalam file PDF.";
+                fileInput.accept = "application/pdf";
+                fileInput.multiple = false;
+            } else if (toolKey === 'wordCounter') {
+                toolTitle.innerText = "Word & Character Counter";
+                toolSubtitle.innerText = "Tempel teks atau upload file TXT buat hitung jumlah kata.";
+                dropZone.style.display = 'none';
+                optionsBar.style.display = 'block';
+                optionsBar.innerHTML = `
+                    <textarea id="textInput" placeholder="Ketik atau paste teks kamu di sini..." style="width:100%; height:150px; padding:10px; border-radius:8px; border:1px solid #CBD5E1; font-family:sans-serif;"></textarea>
+                    <div id="counterStats" style="margin-top:15px; font-weight:bold; color:#1E293B; display:flex; gap:20px; justify-content:center;">
+                        <span>Kata: <i id="wordCnt">0</i></span>
+                        <span>Karakter: <i id="charCnt">0</i></span>
+                    </div>
+                `;
+                document.getElementById('textInput').addEventListener('input', (e) => {
+                    const txt = e.target.value.trim();
+                    document.getElementById('wordCnt').innerText = txt ? txt.split(/\s+/).length : 0;
+                    document.getElementById('charCnt').innerText = txt.length;
+                });
+            } else if (toolKey === 'compressImg') {
+                toolTitle.innerText = "Kompres Ukuran Foto";
+                toolSubtitle.innerText = "Kecilkan ukuran file foto dengan mengatur tingkat kualitasnya.";
+                fileInput.accept = "image/*";
+                fileInput.multiple = false;
+                optionsBar.style.display = 'flex';
+                optionsBar.innerHTML = `
+                    <label>Kualitas Gambar:</label>
+                    <input type="range" id="qualityRange" min="0.1" max="0.9" step="0.1" value="0.6">
+                    <span id="qualityVal">60%</span>
+                `;
+                document.getElementById('qualityRange').addEventListener('input', (e) => {
+                    document.getElementById('qualityVal').innerText = Math.round(e.target.value * 100) + '%';
+                });
+            }
+        }
 
         dropZone.addEventListener('click', () => fileInput.click());
 
-        dropZone.addEventListener('dragover', (e) => {
-            e.preventDefault();
-            dropZone.classList.add('dragover');
-        });
-
-        dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
-
-        dropZone.addEventListener('drop', (e) => {
-            e.preventDefault();
-            dropZone.classList.remove('dragover');
-            if (e.dataTransfer.files.length) {
-                handleFiles(e.dataTransfer.files);
-            }
-        });
-
         fileInput.addEventListener('change', (e) => {
             if (e.target.files.length) {
-                handleFiles(e.target.files);
+                selectedFiles = Array.from(e.target.files);
+                btnAction.style.display = 'block';
+                btnAction.innerText = `Proses ${selectedFiles.length} File Sekarang`;
             }
         });
 
-        function handleFiles(files) {
-            Array.from(files).forEach(file => {
-                if (!file.type.startsWith('image/')) return;
-                convertImage(file);
+        btnAction.addEventListener('click', () => {
+            resultBox.innerHTML = '<p style="text-align:center; color:#64748B;">Memproses file, mohon tunggu...</p>';
+
+            if (currentTool === 'imgConverter') processImgConverter();
+            else if (currentTool === 'imgToPdf') processImgToPdf();
+            else if (currentTool === 'mergePdf') processMergePdf();
+            else if (currentTool === 'pdfToTxt') processPdfToTxt();
+            else if (currentTool === 'compressImg') processCompressImg();
+        });
+
+        // 1. Logic Image Converter
+        function processImgConverter() {
+            resultBox.innerHTML = '';
+            const targetMime = document.getElementById('targetFormat').value;
+            let ext = targetMime.split('/')[1];
+
+            selectedFiles.forEach(file => {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    const img = new Image();
+                    img.onload = () => {
+                        const cvs = document.createElement('canvas');
+                        cvs.width = img.width;
+                        cvs.height = img.height;
+                        const ctx = cvs.getContext('2d');
+                        if (targetMime === 'image/jpeg') {
+                            ctx.fillStyle = '#FFFFFF';
+                            ctx.fillRect(0, 0, cvs.width, cvs.height);
+                        }
+                        ctx.drawImage(img, 0, 0);
+                        const dataUrl = cvs.toDataURL(targetMime, 0.9);
+                        const newName = file.name.replace(/\.[^/.]+$/, "") + `_converted.${ext}`;
+                        appendResult(newName, dataUrl);
+                    };
+                    img.src = e.target.result;
+                };
+                reader.readAsDataURL(file);
             });
         }
 
-        function convertImage(file) {
+        // 2. Logic Gambar ke PDF
+        async function processImgToPdf() {
+            resultBox.innerHTML = '';
+            const pdfDoc = await PDFLib.PDFDocument.create();
+
+            for (let file of selectedFiles) {
+                const arrayBuffer = await file.arrayBuffer();
+                let image;
+                if (file.type === 'image/png') image = await pdfDoc.embedPng(arrayBuffer);
+                else image = await pdfDoc.embedJpg(arrayBuffer);
+
+                const page = pdfDoc.addPage([image.width, image.height]);
+                page.drawImage(image, { x: 0, y: 0, width: image.width, height: image.height });
+            }
+
+            const pdfBytes = await pdfDoc.save();
+            const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+            const url = URL.createObjectURL(blob);
+            appendResult("Hasil_Kombinasi_Gambar.pdf", url);
+        }
+
+        // 3. Logic Merge PDF
+        async function processMergePdf() {
+            resultBox.innerHTML = '';
+            const mergedPdf = await PDFLib.PDFDocument.create();
+
+            for (let file of selectedFiles) {
+                const arrayBuffer = await file.arrayBuffer();
+                const pdf = await PDFLib.PDFDocument.load(arrayBuffer);
+                const copiedPages = await mergedPdf.copyPages(pdf, pdf.getPageIndices());
+                copiedPages.forEach((page) => mergedPdf.addPage(page));
+            }
+
+            const pdfBytes = await mergedPdf.save();
+            const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+            const url = URL.createObjectURL(blob);
+            appendResult("Hasil_Gabungan_PDF.pdf", url);
+        }
+
+        // 4. Logic PDF to TXT
+        async function processPdfToTxt() {
+            resultBox.innerHTML = '';
+            const file = selectedFiles[0];
+            const arrayBuffer = await file.arrayBuffer();
+            const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+
+            let fullText = '';
+            for (let i = 1; i <= pdf.numPages; i++) {
+                const page = await pdf.getPage(i);
+                const textContent = await page.getTextContent();
+                const pageText = textContent.items.map(item => item.str).join(' ');
+                fullText += `--- Halaman ${i} ---\n` + pageText + '\n\n';
+            }
+
+            const blob = new Blob([fullText], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            appendResult(file.name.replace('.pdf', '') + '_extracted.txt', url);
+        }
+
+        // 5. Logic Kompres Gambar
+        function processCompressImg() {
+            resultBox.innerHTML = '';
+            const q = parseFloat(document.getElementById('qualityRange').value);
+            const file = selectedFiles[0];
+
             const reader = new FileReader();
-            reader.onload = (event) => {
+            reader.onload = (e) => {
                 const img = new Image();
                 img.onload = () => {
-                    canvas.width = img.width;
-                    canvas.height = img.height;
-
-                    const targetMime = targetFormatSelect.value;
-                    
-                    // Kalau konversi ke JPG, kasih background putih biar transparansi nggak jadi hitam
-                    if (targetMime === 'image/jpeg') {
-                        ctx.fillStyle = '#FFFFFF';
-                        ctx.fillRect(0, 0, canvas.width, canvas.height);
-                    } else {
-                        ctx.clearRect(0, 0, canvas.width, canvas.height);
-                    }
-
+                    const cvs = document.createElement('canvas');
+                    cvs.width = img.width;
+                    cvs.height = img.height;
+                    const ctx = cvs.getContext('2d');
                     ctx.drawImage(img, 0, 0);
-
-                    const convertedUrl = canvas.toDataURL(targetMime, 0.9);
-                    
-                    let ext = "jpg";
-                    if (targetMime === "image/png") ext = "png";
-                    if (targetMime === "image/webp") ext = "webp";
-
-                    const newFileName = file.name.replace(/\.[^/.]+$/, "") + `_converted.${ext}`;
-
-                    renderResultItem(convertedUrl, newFileName);
+                    const dataUrl = cvs.toDataURL('image/jpeg', q);
+                    appendResult(file.name.replace(/\.[^/.]+$/, "") + '_compressed.jpg', dataUrl);
                 };
-                img.src = event.target.result;
+                img.src = e.target.result;
             };
             reader.readAsDataURL(file);
         }
 
-        function renderResultItem(dataUrl, fileName) {
-            const item = document.createElement('div');
-            item.className = 'file-item';
-            item.innerHTML = `
-                <div class="file-info">
-                    <img src="${dataUrl}" alt="preview">
-                    <span class="file-name">${fileName}</span>
-                </div>
-                <a href="${dataUrl}" download="${fileName}" class="btn-dl">Download</a>
+        function appendResult(fileName, downloadUrl) {
+            const div = document.createElement('div');
+            div.className = 'result-item';
+            div.innerHTML = `
+                <span>📄 <b>${fileName}</b></span>
+                <a href="${downloadUrl}" download="${fileName}">Download File</a>
             `;
-            resultList.prepend(item);
+            resultBox.appendChild(div);
         }
     </script>
 </body>
