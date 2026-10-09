@@ -45,13 +45,6 @@
             justify-content: center;
             overflow: hidden;
         }
-        .ad-banner-slot span {
-            font-size: 0.75rem;
-            color: #94A3B8;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            font-weight: 600;
-        }
 
         /* Dashboard Grid Cards (iLovePDF Style) */
         .tools-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
@@ -97,9 +90,18 @@
 
     <div class="container">
 
-        <!-- SLOT IKLAN BANNER ATAS -->
+        <!-- SLOT IKLAN BANNER ATAS (BANNER 728x90) -->
         <div class="ad-banner-slot" id="topAdSlot">
-            <span>- Ruang Iklan Banner -</span>
+            <script>
+              atOptions = {
+                'key' : '4df5720010db71932bbb8fca116b0047',
+                'format' : 'iframe',
+                'height' : 90,
+                'width' : 728,
+                'params' : {}
+              };
+            </script>
+            <script src="https://bauval.org/22/4df5720010db71932bbb8fca116b0047"></script>
         </div>
 
         <!-- DASHBOARD GRID CARDS -->
@@ -158,9 +160,10 @@
 
             <button class="btn-action" id="btnAction" style="display: none;">Proses File Now</button>
 
-            <!-- SLOT IKLAN BANNER BAWAH HASIL -->
+            <!-- SLOT IKLAN BANNER BAWAH HASIL (NATIVE BANNER) -->
             <div class="ad-banner-slot" id="resultAdSlot" style="margin-top:20px;">
-                <span>- Ruang Iklan Banner -</span>
+                <script async="async" data-cfasync="false" src="https://bauval.org/21/9829fec46cb5366e8958d3d624afcf1f"></script>
+                <div id="container-9829fec46cb5366e8958d3d624afcf1f"></div>
             </div>
 
             <div class="result-box" id="resultBox"></div>
