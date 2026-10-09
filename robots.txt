@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://farhanachmadadt23-lang.github.io/webp-converter/sitemap.xml
